@@ -7,16 +7,58 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 
 class Login: UIViewController {
-
+    
+    
+    @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        emailField.layer.cornerRadius = 2.5
+        passwordField.layer.cornerRadius = 2.5
     }
     
-
+    @IBAction func continueButtonPressed(_ sender: UIBarButtonItem) {
+        if emailField.text != "" || passwordField.text != "" {
+            self.signIn()
+        } else {
+            print("Cant sign in")
+        }
+    }
+    func signIn() {
+        Auth.auth().signIn(withEmail: emailField.text!, password: passwordField.text!) { (AuthResult, error) in
+            
+            if error != nil {
+                print(error?.localizedDescription)
+            }
+            if AuthResult != nil {
+                print("Signed in successfully")
+                self.transition()
+            }
+            
+        }
+    }
+    func transition() {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "Navigation") as UINavigationController
+              vc.modalPresentationStyle = .fullScreen
+              navigationController?.present(vc, animated: true, completion: nil
+              )
+    }
+    
+    @IBAction func resetPasswordButtonPressed(_ sender: UIButton) {
+        Auth.auth().sendPasswordReset(withEmail: emailField.text!) { (error) in
+            
+            if error != nil {
+                print(error?.localizedDescription)
+            }
+        }
+    }
     /*
     // MARK: - Navigation
 

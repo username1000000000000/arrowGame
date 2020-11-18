@@ -10,6 +10,13 @@ import UIKit
 
 class RankCell: UITableViewCell {
 
+    
+    @IBOutlet weak var fullNameLabel: UILabel!
+    @IBOutlet weak var highScoreLabel: UILabel!
+    @IBOutlet weak var rankLabel: UILabel!
+    @IBOutlet weak var icon: UIImageView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
